@@ -9,6 +9,8 @@ import PlaceDetails from "./components/PlaceDetails/PlaceDetails";
 
 const App = () => {
   const [places, setPlaces] = useState([]);
+  const [coordinates, setCoordinates] = useState({});
+  const [bounds, setBounds] = useState(null);
 
   useEffect(() => {
     getPlacesData().then((data) => {
