@@ -10,7 +10,7 @@ import PlaceDetails from "./components/PlaceDetails/PlaceDetails";
 const App = () => {
   const [places, setPlaces] = useState([]);
   const [coordinates, setCoordinates] = useState({});
-  const [bounds, setBounds] = useState(null);
+  const [bounds, setBounds] = useState({});
   const [childClicked, setChildClicked] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,15 +34,16 @@ const App = () => {
   useEffect(() => {
     // console.log(coordinates, bounds);
 
-    if (bounds) {
+    if (bounds.sw && bounds.ne) {
       setIsLoading(true);
       getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
         // console.log(data);
-        setPlaces(data);
+        setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
+        setFilteredPlaces([]);
         setIsLoading(false);
       });
     }
-  }, [type, coordinates, bounds]);
+  }, [type, bounds]);
 
   return (
     <>
